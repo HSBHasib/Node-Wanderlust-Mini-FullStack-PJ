@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import "./globals.css";
 import Footer from "@/components/Footer";
+import { BookingProvider } from "@/components/context/BookingContext";
 
 export const metadata = {
   title: "Wanderlust",
@@ -11,9 +12,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <Navbar />
-        {children}
-        <Footer />
+        <BookingProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </BookingProvider>
       </body>
     </html>
   );

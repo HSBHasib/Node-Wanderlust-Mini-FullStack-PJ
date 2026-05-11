@@ -1,19 +1,18 @@
 import { getDestinationById } from "@/app/lib/FrontendData";
 import Image from "next/image";
-import React from "react";
 import { GoArrowLeft } from "react-icons/go";
 import FormModal from "@/components/FormModal";
 import Link from "next/link";
 import { FaCheck, FaMapMarkerAlt, FaRegCalendarAlt, FaStar } from "react-icons/fa";
 import { MdOutlineCalendarMonth } from "react-icons/md";
-import { HiArrowRight } from "react-icons/hi2";
 import DeleteAlertDialog from "@/components/DeleteAlertDialog";
+import Book from "@/components/Book";
 
 
 const DestinationDetailsPage = async ({ params }) => {
   const { id } = await params;
   const destinationData = await getDestinationById(id);
-
+  
   const {
     destinationName,
     country,
@@ -23,6 +22,7 @@ const DestinationDetailsPage = async ({ params }) => {
     description,
     departureDate,
   } = destinationData;
+
   return (
     <div>
       <div className="max-w-7xl mx-auto px-4 md:px-16 py-10 bg-white">
@@ -136,10 +136,8 @@ const DestinationDetailsPage = async ({ params }) => {
                 <FaRegCalendarAlt className="absolute right-5 top-5 text-gray-400" />
               </div>
 
-              <button className="w-full bg-[#15A1BF] text-white font-medium py-3.5 rounded-lg transition-all flex items-end justify-center gap-3 group">
-                Book Now
-                <HiArrowRight className="text-lg group-hover:translate-x-1 transition-transform" />
-              </button>
+                {/* Book Button */}
+             <Book destinationData={destinationData} />
 
               {/* Support/Info */}
               <div className="mt-8 space-y-4">

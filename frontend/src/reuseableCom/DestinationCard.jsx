@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react'
 import { FaMapMarkerAlt, FaRegCalendarAlt, FaStar } from "react-icons/fa";
 import { HiArrowUpRight } from "react-icons/hi2";
 
 const DestinationCard = ({data}) => {
     const { _id, destinationName, country, price, duration, imageUrl } = data;
+
 
   return (
     <div className="group bg-white ">
