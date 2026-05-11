@@ -15,18 +15,18 @@ const Banner = () => {
         </p>
 
         <div className="flex gap-5">
-          <button className="uppercase bg-cyan-500 px-5 py-3 cursor-pointer rounded-xs">
+          <button className="active:scale-95 transition-all duration-300 cursor-pointer uppercase bg-cyan-500 px-5 py-3 cursor-pointer rounded-xs">
             Explore Now
           </button>
 
-          <button className="uppercase px-5 py-3 bg-white/50 cursor-pointer rounded-xs">
+          <button className="active:scale-95 transition-all duration-300 cursor-pointer uppercase px-5 py-3 bg-white/50 cursor-pointer rounded-xs">
             View Destination
           </button>
         </div>
       </div>
 
-      <div className=" bg-white/30 flex justify-between gap-5 w-full items-center">
-        <div className="px-3">
+      <div className=" bg-white/30 flex justify-between gap-5 w-full items-center py-3">
+        <div className="px-3 ">
           <h3 className="text-sm">Location</h3>
           <p className="text-xs">Address, City or Zip</p>
         </div>
@@ -54,7 +54,7 @@ const Banner = () => {
 
 
 
-        <div className="bg-cyan-500 py-2 px-4">
+        <div className="bg-cyan-500 py-2 px-4 mr-2 rounded-xs font-medium active:scale-95 transition-all duration-300 cursor-pointer">
           <h3>Search</h3>
         </div>
       </div>
