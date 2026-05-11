@@ -1,6 +1,14 @@
 import { getDestinationById } from "@/app/lib/FrontendData";
 import Image from "next/image";
 import React from "react";
+import { GoArrowLeft } from "react-icons/go";
+import FormModal from "@/components/FormModal";
+import Link from "next/link";
+import { FaCheck, FaMapMarkerAlt, FaRegCalendarAlt, FaStar } from "react-icons/fa";
+import { MdOutlineCalendarMonth } from "react-icons/md";
+import { HiArrowRight } from "react-icons/hi2";
+import DeleteAlertDialog from "@/components/DeleteAlertDialog";
+
 
 const DestinationDetailsPage = async ({ params }) => {
   const { id } = await params;
@@ -15,10 +23,24 @@ const DestinationDetailsPage = async ({ params }) => {
     description,
     departureDate,
   } = destinationData;
-  console.log("detail page = ", destinationData);
   return (
     <div>
       <div className="max-w-7xl mx-auto px-4 md:px-16 py-10 bg-white">
+        <div className="-mt-5 mb-4 flex items-center justify-between">
+          <Link href="/destination">
+            <div className="text-[#6C696D] flex items-center gap-2 hover:underline">
+              <GoArrowLeft size={18} /> Back to Destinations 
+            </div>
+          </Link>
+
+          <div className="flex items-center gap-3">
+             <div className="active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-1.5 font-medium border border-[#6C696D]  rounded-sm text-[15px]">
+              <FormModal destinationData={destinationData} />
+            </div>
+            <DeleteAlertDialog destinationData ={destinationData}/>
+          </div>
+        </div>
+
         {/* 1. Hero Image Section */}
         <div className="relative w-full h-[400px] md:h-[500px] rounded-lg overflow-hidden mb-10">
           <Image
@@ -62,7 +84,7 @@ const DestinationDetailsPage = async ({ params }) => {
             </div>
 
             {/* Overview */}
-            <div className="mx-5 mt-4 mb-7">
+            <div className="my-6">
               <h3 className="text-2xl font-semibold ">Overview</h3>
               <p className="text-[#6C696D] leading-relaxed text-[16px]">
                 {description}
@@ -98,7 +120,9 @@ const DestinationDetailsPage = async ({ params }) => {
                 <p className="text-[#6C696D] text-sm mb-1 font-medium tracking-wide">
                   Starting from
                 </p>
-                <p className="text-4xl font-semibold text-[#15A1BF]">${price}</p>
+                <p className="text-4xl font-semibold text-[#15A1BF]">
+                  ${price}
+                </p>
                 <span className="text-[#6C696D] text-sm">per person</span>
               </div>
 
@@ -120,11 +144,12 @@ const DestinationDetailsPage = async ({ params }) => {
               {/* Support/Info */}
               <div className="mt-8 space-y-4">
                 <div className="flex items-end gap-2 text-sm text-[#6C696D]">
-                  <FaCheck className="text-green-500" /> Free cancellation up to 7
-                  days
+                  <FaCheck className="text-green-500" /> Free cancellation up to
+                  7 days
                 </div>
                 <div className="flex items-end gap-2 text-sm text-[#6C696D]">
-                  <FaCheck className="text-green-500" /> Travel insurance included
+                  <FaCheck className="text-green-500" /> Travel insurance
+                  included
                 </div>
                 <div className="flex items-end gap-2 text-sm text-[#6C696D]">
                   <FaCheck className="text-green-500" /> 24/7 customer support
@@ -139,13 +164,3 @@ const DestinationDetailsPage = async ({ params }) => {
 };
 
 export default DestinationDetailsPage;
-
-import {
-  FaMapMarkerAlt,
-  FaStar,
-  FaRegClock,
-  FaCheck,
-  FaRegCalendarAlt,
-} from "react-icons/fa";
-import { HiArrowRight } from "react-icons/hi2";
-import { MdOutlineCalendarMonth } from "react-icons/md";

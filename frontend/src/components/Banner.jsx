@@ -9,7 +9,7 @@ const Banner = () => {
           Discover Your <br /> Next Adventure
         </h1>
 
-        <p className="text-2xl">
+        <p className="text-xl md:max-w-[70%] my-1">
           Explore breathtaking destinations and create unforgettable memories
           with our curated travel experiences.
         </p>
