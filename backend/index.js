@@ -1,11 +1,14 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require('cors');
 const app = express();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion } = require("mongodb");
 
-// Port
+const uri = process.env.MONGODB_URI;
 const port = process.env.PORT || 8000;
-const url = process.env.MONGODB_URI
+
+app.use(cors());
+app.use(express.json())
 
 
 
@@ -15,21 +18,38 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+  },
 });
-
 
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
+    const myDB = client.db("wanderlust");
+    const destinationCollection = myDB.collection("destinations");
+
+    // Add data mongoDB dataBase
+    app.post('/destination', async (req, res) => {
+      const destinationData = req.body;
+      const result = await destinationCollection.insertOne(destinationData);
+
+      // To send data frontend
+      res.send(result);
+    })
 
 
+    // Pass DestinationForm Data to Frontend 'Destination Page' to display.
+    app.get('/destination', async (req, res) => {
+      const result = await destinationCollection.find().toArray();
+      res.send(result)
+    })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!",
+    );
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();

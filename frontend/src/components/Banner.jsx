@@ -25,36 +25,36 @@ const Banner = () => {
         </div>
       </div>
 
-      <div className=" bg-white/30 flex justify-between gap-5 w-full items-center py-3">
-        <div className="px-3 ">
+      <div className=" bg-white/30 flex justify-between gap-5 w-full items-center ">
+        <div className="px-3 py-2 ">
           <h3 className="text-sm">Location</h3>
           <p className="text-xs">Address, City or Zip</p>
         </div>
 
          <Separator variant="tertiary" orientation="vertical" />
 
-        <div>
+        <div className="py-2">
           <h3 className="text-sm">Date/Duration</h3>
           <p className="text-xs">Anytime/3 Days</p>
         </div>
 
            <Separator variant="tertiary" orientation="vertical" />
 
-        <div>
+        <div className="py-2">
           <h3 className="text-sm">Budget</h3>
           <p className="text-xs">$0-$3000</p>
         </div>
 
            <Separator variant="tertiary" orientation="vertical" />
 
-        <div>
+        <div className="py-2">
           <h3 className="text-sm">People</h3>
           <p className="text-xs">5-10</p>
         </div>
 
 
 
-        <div className="bg-cyan-500 py-2 px-4 mr-2 rounded-xs font-medium active:scale-95 transition-all duration-300 cursor-pointer">
+        <div className="bg-cyan-500 py-3.5 px-8 rounded-xs font-medium active:scale-95 transition-all duration-300 cursor-pointer">
           <h3>Search</h3>
         </div>
       </div>

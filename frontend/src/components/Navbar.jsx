@@ -7,12 +7,12 @@ const Navbar = () => {
   return (
     <div className="container mx-auto bg-white">
 
-    <div className="flex items-center justify-between px-3 py-2">
+    <div className="flex items-center justify-between px-3 py-3">
       {/* Left Links */}
       <div className="flex items-center gap-5">
         <NavLinks href={`/`}>Home</NavLinks>
-        <NavLinks href={`/destinations`}>Destinations</NavLinks>
-        <NavLinks href={`/my-bookings`}>My Bookings</NavLinks>
+        <NavLinks href={`/destination`}>Destinations</NavLinks>
+        <NavLinks href={`/my-booking`}>My Bookings</NavLinks>
         <NavLinks href={`/admin`}>Admin</NavLinks>
       </div>
 
