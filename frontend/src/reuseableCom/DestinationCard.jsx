@@ -1,10 +1,11 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react'
 import { FaMapMarkerAlt, FaRegCalendarAlt, FaStar } from "react-icons/fa";
 import { HiArrowUpRight } from "react-icons/hi2";
 
 const DestinationCard = ({data}) => {
-    const { destinationName, country, price, duration, imageUrl } = data;
+    const { _id, destinationName, country, price, duration, imageUrl } = data;
 
   return (
     <div className="group bg-white ">
@@ -29,7 +30,7 @@ const DestinationCard = ({data}) => {
       {/* Details Section */}
       <div className="py-5">
         <div className="flex items-center gap-1.5 text-[13px] mb-1">
-          <FaMapMarkerAlt className="" />
+          <FaMapMarkerAlt />
           <span>{country}</span>
         </div>
 
@@ -46,9 +47,11 @@ const DestinationCard = ({data}) => {
           <span>{duration} Days / {parseInt(duration) - 1} Nights</span>
         </div>
 
+        <Link href={`/destination/${_id}`}>
         <button className="flex items-center gap-1 active:scale-95 transition-all duration-300 text-sky-500 font-bold text-[12px] tracking-[0.15em] hover:text-sky-600 uppercase border-b-2 border-transparent hover:border-sky-500 pb-1">
           Book Now <HiArrowUpRight className="text-lg" />
         </button>
+        </Link>
       </div>
     </div>
   )
