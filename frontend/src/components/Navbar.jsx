@@ -15,8 +15,8 @@ const Navbar = async () => {
   const user = session?.user;
 
   return (
-    <div className="container mx-auto bg-white">
-      <div className="flex items-center justify-between px-3 py-3">
+    <div className="container mx-auto absolute top-3 inset-x-0">
+      <div className="flex items-center justify-between px-5 py-2 bg-white/90 mx-3 rounded-sm">
         {/* Left Links */}
         <div className="flex items-center gap-5">
           <NavLinks href={`/`}>Home</NavLinks>
@@ -43,7 +43,7 @@ const Navbar = async () => {
           ) : (
             <>
               <>
-                <Avatar>
+                <Avatar className="hover:scale-105 transition-all duration-300">
                     <Avatar.Image className="object-cover" alt={`${user?.name}-ProfileImg`} src={user?.image} />
                   <Avatar.Fallback>
                     {user?.name.charAt(0).toUpperCase()}
