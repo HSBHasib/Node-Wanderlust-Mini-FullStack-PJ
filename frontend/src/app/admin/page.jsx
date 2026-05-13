@@ -3,7 +3,7 @@
 import { Button, FieldError, Input, Label, ListBox, TextField, Select, TextArea } from '@heroui/react'
 import React from 'react'
 import { RiDeleteBinLine } from "react-icons/ri";
-import { DestinationFormHandaler } from '../lib/BackendData';
+import { DestinationFormHandaler } from '../../lib/BackendData';
 
 
 const AdminPage = () => {

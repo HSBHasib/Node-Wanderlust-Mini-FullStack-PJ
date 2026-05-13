@@ -2,7 +2,7 @@
 
 import React from 'react'
 import {AlertDialog, Button} from "@heroui/react";
-import { deleteDestinationData } from '@/app/lib/BackendData';
+import { deleteDestinationData } from '@/lib/BackendData';
 
 const DeleteAlertDialog = ({destinationData}) => {
   const {_id, destinationName} = destinationData;

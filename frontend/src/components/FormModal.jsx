@@ -14,7 +14,7 @@ import {
   TextArea,
 } from "@heroui/react";
 import { BiEditAlt } from "react-icons/bi";
-import { updateDestinationData } from "@/app/lib/BackendData";
+import { updateDestinationData } from "@/lib/BackendData";
 
 const FormModal = ({destinationData}) => {
   const {

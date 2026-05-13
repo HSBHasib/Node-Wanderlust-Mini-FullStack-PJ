@@ -1,12 +1,10 @@
 "use client";
 
 import React from "react";
-import { useBooking } from "@/components/context/BookingContext";
-import BookingCards from "@/components/BookingCards";
+import BookingCards from "@/components/BookingPage";
 import EmptyBooking from "@/components/EmptyBooking";
 
 const MyBookingPage = () => {
-  const { bookingList } = useBooking();
   return (
     <div className="py-16 max-w-7xl px-6 h-full">
       {/* Header */}

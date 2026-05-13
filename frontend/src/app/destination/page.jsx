@@ -1,6 +1,6 @@
 import React from "react";
 import { IoIosArrowDown } from "react-icons/io";
-import { getAllDestination } from "../lib/FrontendData";
+import { getAllDestination } from "../../lib/FrontendData";
 import DestinationCard from "@/reuseableCom/DestinationCard";
 import EmptyState from "@/components/EmptyState";
 

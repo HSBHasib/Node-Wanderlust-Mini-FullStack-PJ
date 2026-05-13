@@ -1,12 +1,12 @@
-import { getDestinationById } from "@/app/lib/FrontendData";
+import { getDestinationById } from "@/lib/FrontendData";
 import Image from "next/image";
 import { GoArrowLeft } from "react-icons/go";
 import FormModal from "@/components/FormModal";
 import Link from "next/link";
-import { FaCheck, FaMapMarkerAlt, FaRegCalendarAlt, FaStar } from "react-icons/fa";
+import { FaCheck, FaMapMarkerAlt, FaStar } from "react-icons/fa";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import DeleteAlertDialog from "@/components/DeleteAlertDialog";
-import Book from "@/components/Book";
+import BookingCard from "@/components/BookingCard";
 
 
 const DestinationDetailsPage = async ({ params }) => {
@@ -115,45 +115,7 @@ const DestinationDetailsPage = async ({ params }) => {
 
           {/* 3. Right Booking Sidebar */}
           <div className="lg:col-span-1">
-            <div className="sticky top-10 border border-gray-100 rounded-xl p-8 shadow-xl shadow-slate-100/50">
-              <div className="mb-8">
-                <p className="text-[#6C696D] text-sm mb-1 font-medium tracking-wide">
-                  Starting from
-                </p>
-                <p className="text-4xl font-semibold text-[#15A1BF]">
-                  ${price}
-                </p>
-                <span className="text-[#6C696D] text-sm">per person</span>
-              </div>
-
-              {/* Date Input Box */}
-              <div className="relative mb-5 border-b border-gray-200 pb-5">
-                <input
-                  type="text"
-                  defaultValue={departureDate}
-                  className="w-full border border-gray-200 py-4 px-5 rounded-lg focus:outline-none focus:border-[#15A1BF] transition font-medium bg-gray-50"
-                />
-                <FaRegCalendarAlt className="absolute right-5 top-5 text-gray-400" />
-              </div>
-
-                {/* Book Button */}
-             <Book destinationData={destinationData} />
-
-              {/* Support/Info */}
-              <div className="mt-8 space-y-4">
-                <div className="flex items-end gap-2 text-sm text-[#6C696D]">
-                  <FaCheck className="text-green-500" /> Free cancellation up to
-                  7 days
-                </div>
-                <div className="flex items-end gap-2 text-sm text-[#6C696D]">
-                  <FaCheck className="text-green-500" /> Travel insurance
-                  included
-                </div>
-                <div className="flex items-end gap-2 text-sm text-[#6C696D]">
-                  <FaCheck className="text-green-500" /> 24/7 customer support
-                </div>
-              </div>
-            </div>
+            <BookingCard destinationData={destinationData} />
           </div>
         </div>
       </div>

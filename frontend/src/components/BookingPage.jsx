@@ -5,11 +5,9 @@ import Image from "next/image";
 import { FaCalendarAlt, FaTrashAlt, FaEye } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import Link from "next/link";
-import { useBooking } from "./context/BookingContext";
 
-const BookingCards = ({ data }) => {
+const BookingPage = ({ data }) => {
   const { _id, destinationName, price, duration, imageUrl } = data;
-  const {removeFromBookingList} = useBooking()
 
   const date = new Date();
   const formattedDate = date.toLocaleDateString("en-GB", {
@@ -19,7 +17,7 @@ const BookingCards = ({ data }) => {
   });
   return (
     <div className="w-full flex flex-col md:flex-row bg-white border border-gray-100 rounded-sm overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 mb-6">
-      {/* 1. Image Section - Using Next/Image */}
+      {/* 1. Image Section */}
       <div className="w-full md:w-[300px] h-48 md:h-auto overflow-hidden">
         <Image
           src={imageUrl}
@@ -75,4 +73,4 @@ const BookingCards = ({ data }) => {
   );
 };
 
-export default BookingCards;
+export default BookingPage;
