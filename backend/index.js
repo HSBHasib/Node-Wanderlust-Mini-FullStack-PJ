@@ -23,10 +23,9 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-
     const myDB = client.db("wanderlust");
     const destinationCollection = myDB.collection("destinations");
-
+    const bookingCollection = myDB.collection("bookings");
 
 
     // Add data mongoDB dataBase
@@ -74,7 +73,30 @@ async function run() {
       res.send(result);
     });
 
+
+
+    // -------- Booking Data SetUp  --------
+
     
+
+    // Add data mongoDB dataBase
+    app.post('/booking', async (req, res) => {
+      const bookingData = req.body;
+      console.log('Responce from "BACKEND" function call - ', bookingData);
+      const result = await bookingCollection.insertOne(bookingData);
+
+      // To send data frontend
+      res.send(result);
+    })
+
+    // Pass Data in Frontend
+    app.get('/booking/:userId', async (req, res) => {
+      const {userId} = req.params;
+      const result = await bookingCollection.find({userId}).toArray();
+      res.send(result);
+    })
+
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });

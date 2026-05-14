@@ -8,8 +8,10 @@ import { DestinationFormHandaler } from '../../lib/BackendData';
 
 const AdminPage = () => {
   return (
-    <div className='min-h-screen h-full'>
-      <h1 className='font-semibold pl-10 text-3xl pt-6'>Add New Travel Package</h1>
+    <div className='min-h-screen h-full mt-20 container mx-auto'>
+      <h2 className="text-5xl font-medium text-slate-900 mb-3 tracking-tight pl-9">
+        Add New Travel Package
+        </h2>
       
       {/* Form */}
       <div className='w-2xl mx-auto py-8'>

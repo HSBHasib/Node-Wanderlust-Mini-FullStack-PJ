@@ -5,22 +5,25 @@ import Image from "next/image";
 import { FaCalendarAlt, FaTrashAlt, FaEye } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import Link from "next/link";
+import { getBookingData } from "@/lib/FrontendData";
 
-const BookingPage = ({ data }) => {
-  const { _id, destinationName, price, duration, imageUrl } = data;
+const BookingPage = ({data}) => {
+  const {destinationId, destinationImage, departureDate, destinationName, price} = data;
 
-  const date = new Date();
-  const formattedDate = date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
+  const formattedDate = departureDate 
+  ? new Date(departureDate).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })
+  : "No Date Provided";
+
   return (
     <div className="w-full flex flex-col md:flex-row bg-white border border-gray-100 rounded-sm overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 mb-6">
       {/* 1. Image Section */}
-      <div className="w-full md:w-[300px] h-48 md:h-auto overflow-hidden">
+      <div className="w-full md:w-[320px] h-48 md:h-auto overflow-hidden">
         <Image
-          src={imageUrl}
+          src={destinationImage}
           alt={destinationName}
           width={800}
           height={800}
@@ -45,7 +48,7 @@ const BookingPage = ({ data }) => {
             </div>
             <div className="flex items-center gap-2 font-semibold text-[#6C696D] text-sm">
               <FaLocationDot className="text-xs" />
-              <span>Booking ID: {duration * 2 - duration + 1}</span>
+              <span>Booking ID: {destinationId}</span>
             </div>
           </div>
         </div>
@@ -53,17 +56,17 @@ const BookingPage = ({ data }) => {
         {/* Price Section */}
         <div className="mt-4">
           <span className="text-3xl font-semibold text-[#15A1BF]">
-            ${price}
+          ${price}
           </span>
         </div>
       </div>
 
       {/* 3. Actions Section */}
       <div className="p-6 flex justify-end items-end gap-3 min-w-[150px]">
-        <button onClick={() => removeFromBookingList(_id)} className="flex items-center justify-center gap-2 border border-red-200 text-red-500 px-4 py-2.5 rounded-sm  hover:bg-red-50 transition-colors text-[11px] font-bold uppercase tracking-widest group">
+        <button className="flex items-center justify-center gap-2 border border-red-200 text-red-500 px-4 py-2.5 rounded-sm  hover:bg-red-50 transition-colors text-[11px] font-bold uppercase tracking-widest group">
           <FaTrashAlt className="text-[12px]" /> Cancel
         </button>
-        <Link href={`destination/${_id}`}>
+        <Link href={`destination/${destinationId}`}>
           <button className="flex items-center justify-center gap-2 bg-[#15A1BF] text-white px-4 py-2.5 rounded-sm text-[11px] font-bold uppercase tracking-widest group">
             <FaEye className="text-[13px]" /> View
           </button>

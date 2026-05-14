@@ -8,7 +8,7 @@ const DestinationPage = async () => {
   const destinationData = await getAllDestination();
   console.log("All destination data, ", destinationData);
   return (
-    <section className="py-16 max-w-7xl mx-auto px-6 bg-white">
+    <section className="py-16 max-w-7xl mx-auto px-6 bg-white mt-8">
       {/* Header */}
       <div className="mb-12">
         <h2 className="text-5xl font-light text-slate-900 mb-3 tracking-tight">

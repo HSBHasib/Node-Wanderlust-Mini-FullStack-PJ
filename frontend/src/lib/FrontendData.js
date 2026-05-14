@@ -1,3 +1,5 @@
+// -------- Destination Data --------
+
 export const getAllDestination = async () => {
     const res  =  await fetch('http://localhost:5000/destination');
     const data = await res.json();
@@ -6,6 +8,14 @@ export const getAllDestination = async () => {
 
 export const getDestinationById = async (id) => {
     const res  =  await fetch(`http://localhost:5000/destination/${id}`);
+    const data = await res.json();
+    return data
+}
+
+
+// -------- Booking Data --------
+export const getBookingData = async (id) => {
+    const res = await fetch(`http://localhost:5000/booking/${id}`);
     const data = await res.json();
     return data
 }

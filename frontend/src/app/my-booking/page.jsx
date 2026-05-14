@@ -1,10 +1,22 @@
-"use client";
-
 import React from "react";
-import BookingCards from "@/components/BookingPage";
 import EmptyBooking from "@/components/EmptyBooking";
+import BookingPage from "@/components/BookingPage";
+import { getBookingData } from "@/lib/FrontendData";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 
-const MyBookingPage = () => {
+const MyBookingPage = async () => {
+
+  // Get all data indivitual Users
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const user = session?.user;
+  const id = user?.id;
+
+  // Pass the user is to booking function
+  const bookingData = await getBookingData(id);
+  
   return (
     <div className="py-16 max-w-7xl px-6 h-full">
       {/* Header */}
@@ -17,10 +29,8 @@ const MyBookingPage = () => {
         </p>
       </div>
 
-      {bookingList.length > 0 ? (
-        bookingList.map((data, idx) => (
-          <BookingCards key={idx} data={data} />
-        ))
+      {bookingData.length > 0 ? (
+        bookingData.map((data, idx) => <BookingPage key={idx} data={data} />)
       ) : (
         <EmptyBooking />
       )}

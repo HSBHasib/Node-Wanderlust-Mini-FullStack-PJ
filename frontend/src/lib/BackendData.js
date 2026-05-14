@@ -1,60 +1,85 @@
 import { redirect } from "next/navigation";
+import { toast } from "react-toastify";
+
+// Destination Data
 
 // Access Data From Destination From - (admin page), than send it to mongodb through backend
 export const DestinationFormHandaler = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(e.currentTarget);
-    const destination = Object.fromEntries(formData.entries());
+  e.preventDefault();
+  const form = e.target;
+  const formData = new FormData(e.currentTarget);
+  const destination = Object.fromEntries(formData.entries());
 
-    const res = await fetch('http://localhost:5000/destination', {
-        method: 'POST',
-        headers:{
-            'content-type':'application/json',
-        },
-        body: JSON.stringify(destination)
-    })
+  const res = await fetch("http://localhost:5000/destination", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(destination),
+  });
 
-    const data = await res.json();
+  const data = await res.json();
 
-    if(data.insertedId) {
-        form.reset();
-    }
-}
-
+  if (data.insertedId) {
+    form.reset();
+  }
+};
 
 // Update Destination Data
 export const updateDestinationData = async (e, _id) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const updateDestination = Object.fromEntries(formData.entries());
+  e.preventDefault();
+  const formData = new FormData(e.currentTarget);
+  const updateDestination = Object.fromEntries(formData.entries());
 
-    const res = await fetch(`http://localhost:5000/destination/${_id}`, {
-        method: 'PATCH',
-        headers:{
-            'content-type':'application/json',
-        },
-        body: JSON.stringify(updateDestination)
-    })
-    const data = await res.json();
-    redirect(`/destination/${_id}`)
+  const res = await fetch(`http://localhost:5000/destination/${_id}`, {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(updateDestination),
+  });
+  const data = await res.json();
+  redirect(`/destination/${_id}`);
 
-    // if(data.modifiedCount) {
-    // }
-}
+  // if(data.modifiedCount) {
+  // }
+};
 
 // Update Destination Data
 export const deleteDestinationData = async (e, _id) => {
-    e.preventDefault();
-    const res = await fetch(`http://localhost:5000/destination/${_id}`, {
-        method: 'DELETE',
-        headers:{
-            'content-type':'application/json',
-        },
-    })
-    const data = await res.json();
-    redirect('/destination')
+  e.preventDefault();
+  const res = await fetch(`http://localhost:5000/destination/${_id}`, {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+  const data = await res.json();
+  redirect("/destination");
 
-    // if(data.deletedCount) {
-    // }
-}
+  // if(data.deletedCount) {
+  // }
+};
+
+// -------------------------------------------------------
+
+// Booking Data
+
+export const bookingDataFunc = async (bookingData) => {
+  const res = await fetch("http://localhost:5000/booking", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(bookingData),
+  });
+  const data = await res.json();
+
+  if (data?.acknowledged) {
+    toast.success(`${bookingData.destinationName} Tour Booked Successfully.`, {
+      position: "top-center",
+      autoClose: 2000,
+    });
+  }
+
+};

@@ -2,33 +2,38 @@
 
 import React from "react";
 import { FaCheck, FaRegCalendarAlt } from "react-icons/fa";
-import Book from "./Book";
 
-import {DateField, Description, FieldError, Label} from "@heroui/react";
-import {getLocalTimeZone, today} from "@internationalized/date";
-import {useState} from "react";
-  
+import { DateField, Description, FieldError, Label } from "@heroui/react";
+import { getLocalTimeZone, today } from "@internationalized/date";
+import { useState } from "react";
+import { authClient } from "@/lib/auth-client";
+import { bookingDataFunc } from "@/lib/BackendData";
+import { HiArrowRight } from "react-icons/hi2";
+
 const BookingCard = ({ destinationData }) => {
   const {
+    _id,
     destinationName,
-    country,
     price,
-    duration,
     imageUrl,
-    description,
-    departureDate,
   } = destinationData;
 
-
-    // Date from heroUI
+  // Date from heroUI
   const [value, setValue] = useState(null);
   const todayDate = today(getLocalTimeZone());
   const isInvalid = value !== null && value.compare(todayDate) < 0;
 
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
 
-  const BookingData = [{
-    
-  }]
+  const bookingData = {
+    destinationId: _id,
+    destinationName,
+    price,
+    destinationImage: imageUrl,
+    departureDate: new Date(value),
+    userId: user?.id,
+  };
 
   return (
     <div className="sticky top-10 border border-gray-100 rounded-xl p-8 shadow-xl shadow">
@@ -42,30 +47,42 @@ const BookingCard = ({ destinationData }) => {
 
       {/* Date Input Box */}
       <>
-      <DateField
-        isRequired
-        className="w-[256px] space-y-1 relative md:w-full mb-5 border-b border-gray-200 pb-5 "
-        isInvalid={isInvalid}
-        minValue={todayDate}
-        name="date"
-        value={value}
-        onChange={setValue}
-      >
-        <Label className="text-[#6C696D] pl-1">Date</Label>
-        <DateField.Group className='h-13'>
-          <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
-        </DateField.Group>
-        {isInvalid ? (
-          <FieldError className='pl-1'>Date must be today or in the future</FieldError>
-        ) : (
-          <Description className='pl-1'>Enter a date from today onwards</Description>
-        )}
-        <FaRegCalendarAlt className="absolute right-4 top-11 text-gray-400" />
-      </DateField>
+        <DateField
+          isRequired
+          className="w-[256px] space-y-1 relative md:w-full mb-5 border-b border-gray-200 pb-5 "
+          isInvalid={isInvalid}
+          minValue={todayDate}
+          name="date"
+          value={value}
+          onChange={setValue}
+        >
+          <Label className="text-[#6C696D] pl-1">Date</Label>
+          <DateField.Group className="h-13">
+            <DateField.Input>
+              {(segment) => <DateField.Segment segment={segment} />}
+            </DateField.Input>
+          </DateField.Group>
+          {isInvalid ? (
+            <FieldError className="pl-1">
+              Date must be today or in the future
+            </FieldError>
+          ) : (
+            <Description className="pl-1">
+              Enter a date from today onwards
+            </Description>
+          )}
+          <FaRegCalendarAlt className="absolute right-4 top-11 text-gray-400" />
+        </DateField>
       </>
 
       {/* Book Button */}
-      <Book destinationData={destinationData} />
+      <button
+        onClick={() => bookingDataFunc(bookingData)}
+        className="w-full bg-[#15A1BF] text-white font-medium py-3.5 rounded-lg active:scale-95 transition-all duration-300 flex items-end justify-center gap-3 group"
+      >
+        Book Now
+        <HiArrowRight className="text-lg group-hover:translate-x-1 transition" />
+      </button>
 
       {/* Support/Info */}
       <div className="mt-8 space-y-4">
