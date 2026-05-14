@@ -9,14 +9,10 @@ import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { bookingDataFunc } from "@/lib/BackendData";
 import { HiArrowRight } from "react-icons/hi2";
+import { toast } from "react-toastify";
 
 const BookingCard = ({ destinationData }) => {
-  const {
-    _id,
-    destinationName,
-    price,
-    imageUrl,
-  } = destinationData;
+  const { _id, destinationName, price, imageUrl } = destinationData;
 
   // Date from heroUI
   const [value, setValue] = useState(null);
@@ -46,38 +42,37 @@ const BookingCard = ({ destinationData }) => {
       </div>
 
       {/* Date Input Box */}
-      <>
-        <DateField
-          isRequired
-          className="w-[256px] space-y-1 relative md:w-full mb-5 border-b border-gray-200 pb-5 "
-          isInvalid={isInvalid}
-          minValue={todayDate}
-          name="date"
-          value={value}
-          onChange={setValue}
-        >
-          <Label className="text-[#6C696D] pl-1">Date</Label>
-          <DateField.Group className="h-13">
-            <DateField.Input>
-              {(segment) => <DateField.Segment segment={segment} />}
-            </DateField.Input>
-          </DateField.Group>
-          {isInvalid ? (
-            <FieldError className="pl-1">
-              Date must be today or in the future
-            </FieldError>
-          ) : (
-            <Description className="pl-1">
-              Enter a date from today onwards
-            </Description>
-          )}
-          <FaRegCalendarAlt className="absolute right-4 top-11 text-gray-400" />
-        </DateField>
-      </>
+
+      <DateField
+        isRequired
+        className="w-[256px] space-y-1 relative md:w-full mb-5 border-b border-gray-200 pb-5 "
+        isInvalid={isInvalid}
+        minValue={todayDate}
+        name="date"
+        value={value}
+        onChange={setValue}
+      >
+        <Label className="text-[#6C696D] pl-1">Date</Label>
+        <DateField.Group className="h-13">
+          <DateField.Input>
+            {(segment) => <DateField.Segment segment={segment} />}
+          </DateField.Input>
+        </DateField.Group>
+        {isInvalid ? (
+          <FieldError className="pl-1">
+            Date must be today or in the future
+          </FieldError>
+        ) : (
+          <Description className="pl-1">
+            Enter a date from today onwards
+          </Description>
+        )}
+        <FaRegCalendarAlt className="absolute right-4 top-11 text-gray-400" />
+      </DateField>
 
       {/* Book Button */}
       <button
-        onClick={() => bookingDataFunc(bookingData)}
+        onClick={() => bookingDataFunc(bookingData, value)}
         className="w-full bg-[#15A1BF] text-white font-medium py-3.5 rounded-lg active:scale-95 transition-all duration-300 flex items-end justify-center gap-3 group"
       >
         Book Now

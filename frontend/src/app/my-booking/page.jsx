@@ -16,9 +16,9 @@ const MyBookingPage = async () => {
 
   // Pass the user is to booking function
   const bookingData = await getBookingData(id);
-  
+
   return (
-    <div className="py-16 max-w-7xl px-6 h-full">
+    <div className="py-16 max-w-7xl px-6 h-full mt-8">
       {/* Header */}
       <div className="mb-12">
         <h2 className="text-5xl font-light text-slate-900 mb-3 tracking-tight">

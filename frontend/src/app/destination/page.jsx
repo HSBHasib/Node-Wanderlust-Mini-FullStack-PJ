@@ -6,7 +6,6 @@ import EmptyState from "@/components/EmptyState";
 
 const DestinationPage = async () => {
   const destinationData = await getAllDestination();
-  console.log("All destination data, ", destinationData);
   return (
     <section className="py-16 max-w-7xl mx-auto px-6 bg-white mt-8">
       {/* Header */}

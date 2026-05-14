@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
 
-// Destination Data
+// ----------- Destination Data -----------
 
 // Access Data From Destination From - (admin page), than send it to mongodb through backend
 export const DestinationFormHandaler = async (e) => {
@@ -61,11 +61,19 @@ export const deleteDestinationData = async (e, _id) => {
   // }
 };
 
-// -------------------------------------------------------
 
-// Booking Data
 
-export const bookingDataFunc = async (bookingData) => {
+// ----------- Booking Data -----------
+
+export const bookingDataFunc = async (bookingData, value) => {
+  if(value === null) {
+    toast.warn(`Please choose which day you want to book.`, {
+      position: "top-center",
+      autoClose: 2000,
+    });
+    return
+  }
+
   const res = await fetch("http://localhost:5000/booking", {
     method: "POST",
     headers: {
@@ -78,8 +86,26 @@ export const bookingDataFunc = async (bookingData) => {
   if (data?.acknowledged) {
     toast.success(`${bookingData.destinationName} Tour Booked Successfully.`, {
       position: "top-center",
-      autoClose: 2000,
+      autoClose: 1000,
     });
   }
 
 };
+
+// Cencel Booking Function
+export const cencelBooking = async (id) => {
+  const res  = await fetch(`http://localhost:5000/booking/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'content-type': 'application/json',
+    }
+  });
+  const data = await res.json();
+  if(data?.deletedCount) {
+    toast.success(`Cencel Successfully.`, {
+      position: "top-center",
+      autoClose: 600,
+    });
+    redirect('/my-booking');
+  } 
+}

@@ -31,8 +31,6 @@ const SignupPage = () => {
 
   const formHandaler = async (data) => {
     const { name, image, email, password } = data;
-    console.log(data);
-
     const { data: dets, error } = await authClient.signUp.email({
       name,
       image,

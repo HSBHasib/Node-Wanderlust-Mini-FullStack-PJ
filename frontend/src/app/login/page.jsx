@@ -29,8 +29,6 @@ const LoginPage = () => {
 
   const formHandaler = async (data) => {
     const { email, password } = data;
-    console.log(data);
-
     const { data: dets, error } = await authClient.signIn.email({
       email,
       password,
