@@ -8,14 +8,20 @@ import { auth } from "@/lib/auth";
 const MyBookingPage = async () => {
 
   // Get all data indivitual Users
-  const session = await auth.api.getSession({
-    headers: await headers(),
+  const session = await auth.api.getSession({ 
+    headers: await headers() 
   });
   const user = session?.user;
   const id = user?.id;
 
+
+  // Get Token
+  const {token} = await auth.api.getToken({
+    headers: await headers()
+  });
+
   // Pass the user is to booking function
-  const bookingData = await getBookingData(id);
+  const bookingData = await getBookingData(id, token);
 
   return (
     <div className="py-16 max-w-7xl px-6 h-full mt-8">

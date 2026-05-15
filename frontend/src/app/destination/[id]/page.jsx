@@ -7,11 +7,19 @@ import { FaCheck, FaMapMarkerAlt, FaStar } from "react-icons/fa";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import DeleteAlertDialog from "@/components/DeleteAlertDialog";
 import BookingCard from "@/components/BookingCard";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 
 const DestinationDetailsPage = async ({ params }) => {
   const { id } = await params;
-  const destinationData = await getDestinationById(id);
+
+  // Token Generate 
+  const {token} = await auth.api.getToken({
+    headers: await headers()
+  });
+
+  const destinationData = await getDestinationById(id, token);
   
   const {
     destinationName,
@@ -25,7 +33,7 @@ const DestinationDetailsPage = async ({ params }) => {
 
   return (
     <div>
-      <div className="max-w-7xl mx-auto px-4 md:px-16 py-10 bg-white">
+      <div className="max-w-7xl mx-auto px-4 md:px-16 py-10 bg-white mt-18">
         <div className="-mt-5 mb-4 flex items-center justify-between">
           <Link href="/destination">
             <div className="text-[#6C696D] flex items-center gap-2 hover:underline">
@@ -42,13 +50,12 @@ const DestinationDetailsPage = async ({ params }) => {
         </div>
 
         {/* 1. Hero Image Section */}
-        <div className="relative w-full h-[400px] md:h-[500px] rounded-lg overflow-hidden mb-10">
+        <div className="relative w-full h-100 md:h-125 rounded-lg overflow-hidden mb-10">
           <Image
             src={imageUrl}
             alt={destinationName}
             width={900}
             height={800}
-            quality={100}
             priority
             className="w-full h-full object-cover"
           />

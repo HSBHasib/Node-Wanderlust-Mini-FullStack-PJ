@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React from "react";
 import Image from "next/image";
@@ -6,15 +6,29 @@ import { FaCalendarAlt, FaTrashAlt, FaEye } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import Link from "next/link";
 import { cencelBooking } from "@/lib/BackendData";
+import { authClient } from "@/lib/auth-client";
 
-const BookingPage = ({data}) => {
-  const {_id, destinationId, destinationImage, departureDate, destinationName, price} = data;
-  const formattedDate = new Date(departureDate).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    })
-  
+const BookingPage = ({ data }) => {
+  const {
+    _id,
+    destinationId,
+    destinationImage,
+    departureDate,
+    destinationName,
+    price,
+  } = data;
+
+  const handleCencelBookingToken = async () => {
+    const getToken = await authClient.token();
+    const token = getToken?.data?.token;
+    return token;
+  };
+
+  const formattedDate = new Date(departureDate).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   return (
     <div className="w-full flex flex-col md:flex-row bg-white border border-gray-100 rounded-sm overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 mb-6">
@@ -54,14 +68,17 @@ const BookingPage = ({data}) => {
         {/* Price Section */}
         <div className="mt-4">
           <span className="text-3xl font-semibold text-[#15A1BF]">
-          ${price}
+            ${price}
           </span>
         </div>
       </div>
 
       {/* 3. Actions Section */}
       <div className="p-6 flex justify-end items-end gap-3 min-w-[150px]">
-        <button onClick={() => cencelBooking(_id)} className="flex items-center justify-center gap-2 border border-red-200 text-red-500 px-4 py-2.5 rounded-sm  hover:bg-red-50 transition-colors text-[11px] font-bold uppercase tracking-widest group">
+        <button
+          onClick={() => cencelBooking(_id, handleCencelBookingToken)}
+          className="flex items-center justify-center gap-2 border border-red-200 text-red-500 px-4 py-2.5 rounded-sm  hover:bg-red-50 transition-colors text-[11px] font-bold uppercase tracking-widest group"
+        >
           <FaTrashAlt className="text-[12px]" /> Cancel
         </button>
         <Link href={`destination/${destinationId}`}>

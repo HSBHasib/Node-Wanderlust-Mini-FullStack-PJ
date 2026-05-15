@@ -15,8 +15,15 @@ import {
 } from "@heroui/react";
 import { BiEditAlt } from "react-icons/bi";
 import { updateDestinationData } from "@/lib/BackendData";
+import { authClient } from "@/lib/auth-client";
 
-const FormModal = ({destinationData}) => {
+const FormModal = ({ destinationData }) => {
+  const handleEditToken = async () => {
+    const getToken = await authClient.token();
+    const token = getToken?.data?.token;
+    return token;
+  };
+
   const {
     _id,
     destinationName,
@@ -26,9 +33,9 @@ const FormModal = ({destinationData}) => {
     imageUrl,
     description,
     departureDate,
-    category
+    category,
   } = destinationData;
-  
+
   return (
     <Modal>
       <Button variant="ghost" className="hover:rounded-sm rounded-sm bg-white">
@@ -46,11 +53,18 @@ const FormModal = ({destinationData}) => {
             </Modal.Header>
             <Modal.Body className="p-2">
               <Surface variant="default">
-                <form onSubmit={(e) => updateDestinationData(e, _id)} className="space-y-8 py-3">
+                <form
+                  onSubmit={(e) => updateDestinationData(e, _id, handleEditToken)}
+                  className="space-y-8 py-3"
+                >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Destination Name */}
                     <div className="md:col-span-2">
-                      <TextField defaultValue={destinationName} name="destinationName" isRequired>
+                      <TextField
+                        defaultValue={destinationName}
+                        name="destinationName"
+                        isRequired
+                      >
                         <Label>Destination Name</Label>
                         <Input
                           placeholder="Bali Paradise"
@@ -78,7 +92,6 @@ const FormModal = ({destinationData}) => {
                         className="w-full"
                         placeholder="Select category"
                         defaultValue={category}
-                        
                       >
                         <Label>Category</Label>
                         <Select.Trigger className="rounded-lg bg-[#F8FAFC]">
@@ -117,7 +130,12 @@ const FormModal = ({destinationData}) => {
                     </div>
 
                     {/* Price */}
-                    <TextField defaultValue={price} name="price" type="number" isRequired>
+                    <TextField
+                      defaultValue={price}
+                      name="price"
+                      type="number"
+                      isRequired
+                    >
                       <Label>Price (USD)</Label>
                       <Input
                         type="number"
@@ -128,7 +146,11 @@ const FormModal = ({destinationData}) => {
                     </TextField>
 
                     {/* Duration */}
-                    <TextField defaultValue={duration} name="duration" isRequired>
+                    <TextField
+                      defaultValue={duration}
+                      name="duration"
+                      isRequired
+                    >
                       <Label>Duration</Label>
                       <Input
                         placeholder="7 Days / 6 Nights"
@@ -139,7 +161,12 @@ const FormModal = ({destinationData}) => {
 
                     {/* Departure Date */}
                     <div className="md:col-span-2">
-                      <TextField defaultValue={departureDate} name="departureDate" type="date" isRequired>
+                      <TextField
+                        defaultValue={departureDate}
+                        name="departureDate"
+                        type="date"
+                        isRequired
+                      >
                         <Label>Departure Date</Label>
                         <Input
                           type="date"
@@ -151,7 +178,11 @@ const FormModal = ({destinationData}) => {
 
                     {/* Image URL - Removed preview */}
                     <div className="md:col-span-2">
-                      <TextField defaultValue={imageUrl} name="imageUrl" isRequired>
+                      <TextField
+                        defaultValue={imageUrl}
+                        name="imageUrl"
+                        isRequired
+                      >
                         <Label>Image URL</Label>
                         <Input
                           type="url"
@@ -164,7 +195,11 @@ const FormModal = ({destinationData}) => {
 
                     {/* Description */}
                     <div className="md:col-span-2">
-                      <TextField defaultValue={description} name="description" isRequired>
+                      <TextField
+                        defaultValue={description}
+                        name="description"
+                        isRequired
+                      >
                         <Label>Description</Label>
                         <TextArea
                           rows={5}

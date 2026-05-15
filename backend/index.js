@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+const { createRemoteJWKSet, jwtVerify } = require("jose-cjs");
 
 const uri = process.env.MONGODB_URI;
 const port = process.env.PORT || 8000;
@@ -19,6 +20,37 @@ const client = new MongoClient(uri, {
   },
 });
 
+// Verify the Token
+const varifyToken = async (req, res, next) => {
+  const authHeader = req?.headers?.authorization;
+  if (!authHeader) {
+    return res.status(401).json({
+      message: "unauthorized",
+    });
+  }
+
+  const token = authHeader.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({
+      message: "unauthorized",
+    });
+  }
+
+  const JWKS = createRemoteJWKSet(
+    new URL("http://localhost:3000/api/auth/jwks"),
+  );
+
+  try { const { payload } = await jwtVerify(token, JWKS)
+    next()
+  } catch (error) {
+    return res.status(403).json({
+      message: "Invalid or Expired Token"
+    });
+  }
+};
+
+
+// API Func
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -27,9 +59,9 @@ async function run() {
     const destinationCollection = myDB.collection("destinations");
     const bookingCollection = myDB.collection("bookings");
 
-
     // Add data mongoDB dataBase
-    app.post("/destination", async (req, res) => {
+    app.post("/destination", varifyToken, async (req, res) => {
+      // varifyToken,
       const destinationData = req.body;
       const result = await destinationCollection.insertOne(destinationData);
 
@@ -44,7 +76,7 @@ async function run() {
     });
 
     // Pass Data Id wise in Frontend
-    app.get("/destination/:id", async (req, res) => {
+    app.get("/destination/:id", varifyToken, async (req, res) => {
       const { id } = req.params;
       const result = await destinationCollection.findOne({
         _id: new ObjectId(id),
@@ -53,54 +85,52 @@ async function run() {
     });
 
     // Update Destination Data
-    app.patch("/destination/:id", async (req, res) => {
+    app.patch("/destination/:id", varifyToken, async (req, res) => {
       const { id } = req.params;
       const updateData = req.body;
 
       const result = await destinationCollection.updateOne(
-        {_id: new ObjectId(id)},
-        {$set: updateData}
-      )
+        { _id: new ObjectId(id) },
+        { $set: updateData },
+      );
       res.send(result);
     });
 
     // Delete Destination Data
-    app.delete("/destination/:id", async (req, res) => {
+    app.delete("/destination/:id", varifyToken, async (req, res) => {
       const { id } = req.params;
-      const result = await destinationCollection.deleteOne({_id: new ObjectId(id)})
+      const result = await destinationCollection.deleteOne({
+        _id: new ObjectId(id),
+      });
       res.send(result);
     });
 
-
-
     // -------- Booking Data SetUp  --------
 
-    
-
     // Add data mongoDB dataBase
-    app.post('/booking', async (req, res) => {
+    app.post("/booking", varifyToken, async (req, res) => {
       const bookingData = req.body;
       const result = await bookingCollection.insertOne(bookingData);
 
       // To send data frontend
       res.send(result);
-    })
+    });
 
     // Pass Data in Frontend
-    app.get('/booking/:userId', async (req, res) => {
-      const {userId} = req.params;
-      const result = await bookingCollection.find({userId}).toArray();
+    app.get("/booking/:userId", varifyToken, async (req, res) => {
+      const { userId } = req.params;
+      const result = await bookingCollection.find({ userId }).toArray();
       res.send(result);
-    })
+    });
 
     // Delete Data
-    app.delete('/booking/:bookingId', async (req, res) => {
-      const {bookingId} = req.params;
-      const result = await bookingCollection.deleteOne({_id: new ObjectId(bookingId)});
+    app.delete("/booking/:bookingId", varifyToken, async (req, res) => {
+      const { bookingId } = req.params;
+      const result = await bookingCollection.deleteOne({
+        _id: new ObjectId(bookingId),
+      });
       res.send(result);
-    })
-
-
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });

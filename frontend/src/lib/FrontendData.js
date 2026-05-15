@@ -6,16 +6,26 @@ export const getAllDestination = async () => {
     return data
 }
 
-export const getDestinationById = async (id) => {
-    const res  =  await fetch(`http://localhost:5000/destination/${id}`);
+export const getDestinationById = async (id, token) => {
+    const res  =  await fetch(`http://localhost:5000/destination/${id}`, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    });
     const data = await res.json();
     return data
 }
 
 
 // -------- Booking Data --------
-export const getBookingData = async (id) => {
-    const res = await fetch(`http://localhost:5000/booking/${id}`);
+export const getBookingData = async (id, token) => {
+    const res = await fetch(`http://localhost:5000/booking/${id}`, {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    });
     const data = await res.json();
     return data
 }
+
+

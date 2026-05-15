@@ -9,27 +9,35 @@ import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { bookingDataFunc } from "@/lib/BackendData";
 import { HiArrowRight } from "react-icons/hi2";
-import { toast } from "react-toastify";
 
 const BookingCard = ({ destinationData }) => {
   const { _id, destinationName, price, imageUrl } = destinationData;
-
   // Date from heroUI
   const [value, setValue] = useState(null);
   const todayDate = today(getLocalTimeZone());
   const isInvalid = value !== null && value.compare(todayDate) < 0;
 
+  // User Details
   const { data: session } = authClient.useSession();
   const user = session?.user;
+  
+  const handleBookingSubmit = async () => {
+    // Token
+    const getToken = await authClient.token();
+    const token = getToken?.data?.token;
 
-  const bookingData = {
-    destinationId: _id,
-    destinationName,
-    price,
-    destinationImage: imageUrl,
-    departureDate: new Date(value),
-    userId: user?.id,
-  };
+    // Booking Details
+    const bookingData = {
+      destinationId: _id,
+      destinationName,
+      price,
+      destinationImage: imageUrl,
+      departureDate: new Date(value),
+      userId: user?.id,
+    };
+
+    await bookingDataFunc(bookingData, value, token);
+  }
 
   return (
     <div className="sticky top-10 border border-gray-100 rounded-xl p-8 shadow-xl shadow">
@@ -72,7 +80,7 @@ const BookingCard = ({ destinationData }) => {
 
       {/* Book Button */}
       <button
-        onClick={() => bookingDataFunc(bookingData, value)}
+        onClick={() => handleBookingSubmit()}
         className="w-full bg-[#15A1BF] text-white font-medium py-3.5 rounded-lg active:scale-95 transition-all duration-300 flex items-end justify-center gap-3 group"
       >
         Book Now

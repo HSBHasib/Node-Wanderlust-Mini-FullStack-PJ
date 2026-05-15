@@ -1,5 +1,5 @@
 import { Separator } from "@heroui/react";
-
+import Link from "next/link";
 
 const Banner = () => {
   return (
@@ -19,9 +19,11 @@ const Banner = () => {
             Explore Now
           </button>
 
-          <button className="active:scale-95 transition-all duration-300 cursor-pointer uppercase px-5 py-3 bg-white/50 cursor-pointer rounded-xs">
-            View Destination
-          </button>
+          <Link href="/destination">
+            <button className="active:scale-95 transition-all duration-300 cursor-pointer uppercase px-5 py-3 bg-white/50 cursor-pointer rounded-xs">
+              View Destination
+            </button>
+          </Link>
         </div>
       </div>
 
@@ -31,28 +33,26 @@ const Banner = () => {
           <p className="text-xs">Address, City or Zip</p>
         </div>
 
-         <Separator variant="tertiary" orientation="vertical" />
+        <Separator variant="tertiary" orientation="vertical" />
 
         <div className="py-2">
           <h3 className="text-sm">Date/Duration</h3>
           <p className="text-xs">Anytime/3 Days</p>
         </div>
 
-           <Separator variant="tertiary" orientation="vertical" />
+        <Separator variant="tertiary" orientation="vertical" />
 
         <div className="py-2">
           <h3 className="text-sm">Budget</h3>
           <p className="text-xs">$0-$3000</p>
         </div>
 
-           <Separator variant="tertiary" orientation="vertical" />
+        <Separator variant="tertiary" orientation="vertical" />
 
         <div className="py-2">
           <h3 className="text-sm">People</h3>
           <p className="text-xs">5-10</p>
         </div>
-
-
 
         <div className="bg-cyan-500 py-3.5 px-8 rounded-xs font-medium active:scale-95 transition-all duration-300 cursor-pointer">
           <h3>Search</h3>

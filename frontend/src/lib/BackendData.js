@@ -4,16 +4,19 @@ import { toast } from "react-toastify";
 // ----------- Destination Data -----------
 
 // Access Data From Destination From - (admin page), than send it to mongodb through backend
-export const DestinationFormHandaler = async (e) => {
+export const DestinationFormHandaler = async (e, getToken) => {
   e.preventDefault();
   const form = e.target;
   const formData = new FormData(e.currentTarget);
   const destination = Object.fromEntries(formData.entries());
 
+  const token = await getToken();
+
   const res = await fetch("http://localhost:5000/destination", {
     method: "POST",
     headers: {
       "content-type": "application/json",
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(destination),
   });
@@ -26,15 +29,18 @@ export const DestinationFormHandaler = async (e) => {
 };
 
 // Update Destination Data
-export const updateDestinationData = async (e, _id) => {
+export const updateDestinationData = async (e, _id, getToken) => {
   e.preventDefault();
   const formData = new FormData(e.currentTarget);
   const updateDestination = Object.fromEntries(formData.entries());
+
+  const token = await getToken();
 
   const res = await fetch(`http://localhost:5000/destination/${_id}`, {
     method: "PATCH",
     headers: {
       "content-type": "application/json",
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(updateDestination),
   });
@@ -46,12 +52,15 @@ export const updateDestinationData = async (e, _id) => {
 };
 
 // Update Destination Data
-export const deleteDestinationData = async (e, _id) => {
+export const deleteDestinationData = async (e, _id, getToken) => {
   e.preventDefault();
+  const token = await getToken();
+
   const res = await fetch(`http://localhost:5000/destination/${_id}`, {
     method: "DELETE",
     headers: {
       "content-type": "application/json",
+      authorization: `Bearer ${token}`,
     },
   });
   const data = await res.json();
@@ -61,23 +70,22 @@ export const deleteDestinationData = async (e, _id) => {
   // }
 };
 
-
-
 // ----------- Booking Data -----------
 
-export const bookingDataFunc = async (bookingData, value) => {
-  if(value === null) {
+export const bookingDataFunc = async (bookingData, value, token) => {
+  if (value === null) {
     toast.warn(`Please choose which day you want to book.`, {
       position: "top-center",
       autoClose: 2000,
     });
-    return
+    return;
   }
 
   const res = await fetch("http://localhost:5000/booking", {
     method: "POST",
     headers: {
       "content-type": "application/json",
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(bookingData),
   });
@@ -89,23 +97,26 @@ export const bookingDataFunc = async (bookingData, value) => {
       autoClose: 1000,
     });
   }
-
 };
 
 // Cencel Booking Function
-export const cencelBooking = async (id) => {
-  const res  = await fetch(`http://localhost:5000/booking/${id}`, {
-    method: 'DELETE',
+export const cencelBooking = async (id, getToken) => {
+  const token = await getToken();
+
+  const res = await fetch(`http://localhost:5000/booking/${id}`, {
+    method: "DELETE",
     headers: {
-      'content-type': 'application/json',
-    }
+      "content-type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
   });
   const data = await res.json();
-  if(data?.deletedCount) {
+  
+  if (data?.deletedCount) {
     toast.success(`Cencel Successfully.`, {
       position: "top-center",
       autoClose: 600,
     });
-    redirect('/my-booking');
-  } 
-}
+    redirect("/my-booking");
+  }
+};

@@ -34,21 +34,34 @@ const Navbar = async () => {
         <div className="flex items-center gap-5 font-medium">
           {!user ? (
             <>
-              <Link className="flex items-end gap-1 hover:underline" href={`/profile`}>
+              <Link
+                className="flex items-end gap-1 hover:underline"
+                href={`/profile`}
+              >
                 <MdPerson4 size={22} /> Profile
               </Link>
-              <Link className="hover:underline" href={`/login`}>Login</Link>
-              <Link className="hover:underline" href={`/signup`}>Sign Up</Link>
+              <Link className="hover:underline" href={`/login`}>
+                Login
+              </Link>
+              <Link className="hover:underline" href={`/signup`}>
+                Sign Up
+              </Link>
             </>
           ) : (
             <>
               <>
-                <Avatar className="hover:scale-105 transition-all duration-300">
-                    <Avatar.Image className="object-cover" alt={`${user?.name}-ProfileImg`} src={user?.image} />
-                  <Avatar.Fallback>
-                    {user?.name.charAt(0).toUpperCase()}
-                  </Avatar.Fallback>
-                </Avatar>
+                <Link href="/profile">
+                  <Avatar className="hover:scale-105 transition-all duration-300">
+                    <Avatar.Image
+                      className="object-cover"
+                      alt={`${user?.name}-ProfileImg`}
+                      src={user?.image}
+                    />
+                    <Avatar.Fallback>
+                      {user?.name.charAt(0).toUpperCase()}
+                    </Avatar.Fallback>
+                  </Avatar>
+                </Link>
                 <LogoutButton />
               </>
             </>

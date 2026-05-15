@@ -4,9 +4,17 @@ import { Button, FieldError, Input, Label, ListBox, TextField, Select, TextArea 
 import React from 'react'
 import { RiDeleteBinLine } from "react-icons/ri";
 import { DestinationFormHandaler } from '../../lib/BackendData';
+import { authClient } from '@/lib/auth-client';
 
 
 const AdminPage = () => {
+
+  const handleAdminPageToken = async () => {
+    const getToken = await authClient.token();
+    const token = getToken?.data?.token;
+    return token;
+  }
+
   return (
     <div className='min-h-screen h-full mt-20 container mx-auto'>
       <h2 className="text-5xl font-medium text-slate-900 mb-3 tracking-tight pl-9">
@@ -16,7 +24,7 @@ const AdminPage = () => {
       {/* Form */}
       <div className='w-2xl mx-auto py-8'>
         <form
-            onSubmit={DestinationFormHandaler}
+            onSubmit={(e) => DestinationFormHandaler(e, handleAdminPageToken)}
             className="p-10 space-y-8 shadow-xl rounded-sm"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -149,7 +157,7 @@ const AdminPage = () => {
             <Button
               type="submit"
               variant="outline"
-              className=" rounded-sm bg-[#15A1BF] text-white"
+              className=" rounded-sm bg-[#15A1BF] text-white border-none"
             >
               Add Travel Package
             </Button>

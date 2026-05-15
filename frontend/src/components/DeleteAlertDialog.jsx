@@ -3,9 +3,17 @@
 import React from 'react'
 import {AlertDialog, Button} from "@heroui/react";
 import { deleteDestinationData } from '@/lib/BackendData';
+import { authClient } from '@/lib/auth-client';
 
 const DeleteAlertDialog = ({destinationData}) => {
   const {_id, destinationName} = destinationData;
+
+  const handleDeleteWanderlustToken = async () => {
+      const getToken = await authClient.token();
+      const token = getToken?.data?.token;
+      return token;
+    }
+
   return (
     <div>
        <AlertDialog>
@@ -28,7 +36,7 @@ const DeleteAlertDialog = ({destinationData}) => {
               <Button slot="close" variant="tertiary" className='rounded-sm'>
                 Cancel
               </Button>
-              <Button onClick={(e) => deleteDestinationData(e, _id)} type='submit' slot="close" className='bg-danger-soft text-danger-soft-foreground rounded-sm'>
+              <Button onClick={(e) => deleteDestinationData(e, _id, handleDeleteWanderlustToken)} type='submit' slot="close" className='bg-danger-soft text-danger-soft-foreground rounded-sm'>
                 Delete
               </Button>
             </AlertDialog.Footer>

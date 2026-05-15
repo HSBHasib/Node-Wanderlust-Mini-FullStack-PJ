@@ -32,7 +32,7 @@ export default function NotFound() {
               Back to Home
             </Link>
             <Link 
-              href="/destinations" 
+              href="/destination" 
               className="px-8 py-4 border-2 border-slate-200 text-slate-700 font-semibold rounded-lg hover:border-slate-900 transition-all"
             >
               Browse Destinations

@@ -2,9 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaMapMarkerAlt, FaRegCalendarAlt, FaStar } from "react-icons/fa";
 import { HiArrowUpRight } from "react-icons/hi2";
+import { IoMdStar } from 'react-icons/io';
 
 const DestinationCard = ({data}) => {
-    const { _id, destinationName, country, price, duration, imageUrl } = data;
+  const { _id, destinationName, country, price, duration, imageUrl } = data;
+  
+  const rating =  parseFloat((Math.random() * (5 - 3) + 3).toFixed(1));
+  
 
 
   return (
@@ -16,14 +20,14 @@ const DestinationCard = ({data}) => {
           alt={destinationName}
           width={1000}
           height={1000}
-          quality={100}
+          quality={80}
           priority
           className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
         />
         {/* Rating Badge */}
         <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded flex items-center gap-1 shadow-sm">
-          <span className="text-sm font-bold text-slate-800">4.5</span>
-          <FaStar className="text-[12px] text-black" />
+          <span className="text-sm font-bold text-slate-800 flex items-center">{rating}</span>
+          <IoMdStar className="text-[18px] text-black" />
         </div>
       </div>
 
