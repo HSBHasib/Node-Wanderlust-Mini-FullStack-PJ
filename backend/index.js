@@ -12,7 +12,7 @@ const port = process.env.PORT || 8000;
 app.use(cors());
 app.use(express.json());
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+// Create a MongcoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -72,11 +72,18 @@ async function run() {
       res.send(result);
     });
 
-    // Pass DestinationForm Data to Frontend 'Destination Page' to display.
+    // Pass All DestinationForm Data to Frontend 'Destination Page' to display.
     app.get("/destination", async (req, res) => {
       const result = await destinationCollection.find().toArray();
       res.send(result);
     });
+
+    // Pass 5 DestinationForm Data to Frontend 'Destination Page' to display.
+    app.get("/featured", async(req, res) => {
+      const result = await destinationCollection.find().limit(5).toArray();
+      res.send(result);
+    })
+    
 
     // Pass Data Id wise in Frontend
     app.get("/destination/:id", varifyToken, async (req, res) => {

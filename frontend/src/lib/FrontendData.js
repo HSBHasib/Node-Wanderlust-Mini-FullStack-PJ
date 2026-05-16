@@ -6,6 +6,12 @@ export const getAllDestination = async () => {
     return data
 }
 
+export const getFeaturedDestination = async () => {
+    const res  =  await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/featured`);
+    const data = await res.json();
+    return data
+}
+
 export const getDestinationById = async (id, token) => {
     const res  =  await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destination/${id}`, {
         headers: {
