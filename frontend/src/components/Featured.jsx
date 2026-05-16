@@ -1,12 +1,12 @@
 import { getFeaturedDestination } from "@/lib/FrontendData";
 import DestinationCard from "@/reuseableCom/DestinationCard";
+import Link from "next/link";
 import React from "react";
 import { GoArrowRight } from "react-icons/go";
+import FeaturedSlider from "./FeaturedSlider";
 
 const FeaturedDestination = async () => {
   const featuredData = await getFeaturedDestination();
-  // const {} = featuredData;
-  console.log("All featured data - ", featuredData);
   return (
     <div className="max-w-6xl mx-auto my-18">
       {/* Header */}
@@ -21,11 +21,16 @@ const FeaturedDestination = async () => {
         </div>
 
         <div>
-            <button className="flex items-center gap-3 uppercase text-[14px] text-[#00B8DB] border-[1.3px] rounded-xs border-[#00B8DB] px-6 py-2 active:scale-95 transition-all duration-500">All Destination <GoArrowRight size={18} /></button>
+          <Link href="/destination">
+            <button className="flex items-center gap-3 uppercase text-[14px] text-[#00B8DB] border-[1.3px] rounded-xs border-[#00B8DB] px-6 py-2 active:scale-95 transition-all duration-500">
+              All Destination <GoArrowRight size={18} />
+            </button>
+          </Link>
         </div>
       </div>
 
-      {/* <DestinationCard /> */}
+      {/* Featured Destination Data */}
+      <FeaturedSlider featuredData={featuredData} />
     </div>
   );
 };
