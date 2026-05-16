@@ -12,7 +12,7 @@ export const DestinationFormHandaler = async (e, getToken) => {
 
   const token = await getToken();
 
-  const res = await fetch("http://localhost:5000/destination", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destination`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -36,7 +36,7 @@ export const updateDestinationData = async (e, _id, getToken) => {
 
   const token = await getToken();
 
-  const res = await fetch(`http://localhost:5000/destination/${_id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destination/${_id}`, {
     method: "PATCH",
     headers: {
       "content-type": "application/json",
@@ -56,7 +56,7 @@ export const deleteDestinationData = async (e, _id, getToken) => {
   e.preventDefault();
   const token = await getToken();
 
-  const res = await fetch(`http://localhost:5000/destination/${_id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destination/${_id}`, {
     method: "DELETE",
     headers: {
       "content-type": "application/json",
@@ -81,7 +81,7 @@ export const bookingDataFunc = async (bookingData, value, token) => {
     return;
   }
 
-  const res = await fetch("http://localhost:5000/booking", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/booking`, {
     method: "POST",
     headers: {
       "content-type": "application/json",
@@ -103,7 +103,7 @@ export const bookingDataFunc = async (bookingData, value, token) => {
 export const cencelBooking = async (id, getToken) => {
   const token = await getToken();
 
-  const res = await fetch(`http://localhost:5000/booking/${id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/booking/${id}`, {
     method: "DELETE",
     headers: {
       "content-type": "application/json",

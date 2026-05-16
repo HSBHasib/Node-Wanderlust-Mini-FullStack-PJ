@@ -17,7 +17,7 @@ import { BiEditAlt } from "react-icons/bi";
 import { updateDestinationData } from "@/lib/BackendData";
 import { authClient } from "@/lib/auth-client";
 
-const FormModal = ({ destinationData }) => {
+const DestinationFormModal = ({ destinationData }) => {
   const handleEditToken = async () => {
     const getToken = await authClient.token();
     const token = getToken?.data?.token;
@@ -236,4 +236,4 @@ const FormModal = ({ destinationData }) => {
   );
 };
 
-export default FormModal;
+export default DestinationFormModal;

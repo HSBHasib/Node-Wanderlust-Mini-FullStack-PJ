@@ -57,7 +57,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center items-center py-12 px-4">
+    <div className="min-h-screen bg-gray-50 flex flex-col justify-center items-center py-12 px-4 mt-13">
       {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold font-serif text-gray-900 mb-2">
@@ -169,10 +169,10 @@ const LoginPage = () => {
         <p className="text-center text-sm text-gray-500 mt-6">
           Already have an account?{" "}
           <a
-            href="/login"
+            href="/signup"
             className="text-[#15A1BF] font-medium hover:underline"
           >
-            Log In
+            Sign Up
           </a>
         </p>
       </div>

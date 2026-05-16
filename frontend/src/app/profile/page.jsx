@@ -5,14 +5,13 @@ import Image from "next/image";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import ProfileBackButton from "@/components/ProfileBackButton";
+import ProfileFormModal from "@/components/ProfileFormModal";
 
 const ProfilePage = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
   const user = session?.user;
-
-  console.log("user details - ", user);
 
   if (!user) {
     return (
@@ -155,13 +154,9 @@ const ProfilePage = async () => {
 
               <div className="border-t border-slate-100 pt-6 flex justify-end gap-3">
                 <Button
-                  variant="flat"
-                  className="bg-slate-100 hover:bg-slate-200 text-slate-600 font-medium px-5 py-2.5 rounded-xl text-sm transition-all"
+                  className="bg-[#15A1BF] hover:bg-[#15A1BF]/90  text-slate-600 font-medium py-2.5 rounded-xl text-sm transition-all"
                 >
-                  Edit Profile
-                </Button>
-                <Button className="bg-[#15A1BF] hover:bg-[#15A1BF]/90 text-white font-medium px-5 py-2.5 rounded-xl text-sm transition-all shadow-md shadow-[#15A1BF]/20">
-                  Save Changes
+                  <ProfileFormModal userName={user?.name} userImage={user?.image} />
                 </Button>
               </div>
             </Card>

@@ -1,7 +1,6 @@
 import { getDestinationById } from "@/lib/FrontendData";
 import Image from "next/image";
 import { GoArrowLeft } from "react-icons/go";
-import FormModal from "@/components/FormModal";
 import Link from "next/link";
 import { FaCheck, FaMapMarkerAlt, FaStar } from "react-icons/fa";
 import { MdOutlineCalendarMonth } from "react-icons/md";
@@ -9,6 +8,7 @@ import DeleteAlertDialog from "@/components/DeleteAlertDialog";
 import BookingCard from "@/components/BookingCard";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import DestinationFormModal from "@/components/DestinationFormModal";
 
 
 const DestinationDetailsPage = async ({ params }) => {
@@ -43,7 +43,7 @@ const DestinationDetailsPage = async ({ params }) => {
 
           <div className="flex items-center gap-3">
              <div className="active:scale-95 transition-all duration-300 cursor-pointer flex items-center gap-1.5 font-medium border border-[#6C696D]  rounded-sm text-[15px]">
-              <FormModal destinationData={destinationData} />
+              <DestinationFormModal destinationData={destinationData} />
             </div>
             <DeleteAlertDialog destinationData ={destinationData}/>
           </div>
